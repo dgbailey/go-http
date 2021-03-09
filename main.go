@@ -13,6 +13,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/rs/cors"
 	"github.com/ulule/deepcopier"
+	"github.com/dgbailey/dsn"
 )
 
 var (
@@ -70,13 +71,13 @@ func (h *handler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		sendSentryCaptureMessage(rw, r)
 
 	case "/checkout":
-		// originalDSN, err := dsn.FromRequest(r) 
+		originalDSN, err := dsn.FromRequest(r) 
 
-		// if( err != nil ){
-		// 	fmt.Println(err)
-		// }
-		// fmt.Println("DSNNNNNNN********")
-		// fmt.Println(originalDSN.URL)
+		if( err != nil ){
+			log.Print(err)
+		}
+		log.Print("DSNNNNNNN********")
+		log.Print(originalDSN.URL)
 
 		if r.Method == "POST" {
 			handleCheckout(rw, r)
