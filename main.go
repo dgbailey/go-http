@@ -76,6 +76,7 @@ func (h *handler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		if( err != nil ){
 			fmt.Println(err)
 		}
+		fmt.Println("DSNNNNNNN********")
 		fmt.Println(originalDSN.URL)
 
 		if r.Method == "POST" {
