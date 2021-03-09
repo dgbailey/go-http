@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	"github.com/dgbailey/dsn"
 	"github.com/getsentry/sentry-go"
 	sentryhttp "github.com/getsentry/sentry-go/http"
 	"github.com/joho/godotenv"
@@ -71,13 +70,13 @@ func (h *handler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		sendSentryCaptureMessage(rw, r)
 
 	case "/checkout":
-		originalDSN, err := dsn.FromRequest(r) 
+		// originalDSN, err := dsn.FromRequest(r) 
 
-		if( err != nil ){
-			fmt.Println(err)
-		}
-		fmt.Println("DSNNNNNNN********")
-		fmt.Println(originalDSN.URL)
+		// if( err != nil ){
+		// 	fmt.Println(err)
+		// }
+		// fmt.Println("DSNNNNNNN********")
+		// fmt.Println(originalDSN.URL)
 
 		if r.Method == "POST" {
 			handleCheckout(rw, r)
