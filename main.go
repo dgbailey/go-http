@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
-
+	"github.com/dgbailey/dsn"
 	"github.com/getsentry/sentry-go"
 	sentryhttp "github.com/getsentry/sentry-go/http"
 	"github.com/joho/godotenv"
@@ -51,6 +51,7 @@ func (h *handler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		}
 
 	}
+	
 
 	endpointRequest := r.URL.Path
 	sentry.AddBreadcrumb(&sentry.Breadcrumb{
@@ -70,6 +71,13 @@ func (h *handler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		sendSentryCaptureMessage(rw, r)
 
 	case "/checkout":
+		originalDSN, err := dsn.FromRequest(r) 
+
+		if( err != nil ){
+			fmt.Println(err)
+		}
+		fmt.Println(originalDSN.URL)
+
 		if r.Method == "POST" {
 			handleCheckout(rw, r)
 		} else {
@@ -172,7 +180,7 @@ func init() {
 		log.Print("No .env file found")
 	}
 	if DSN = os.Getenv("DSN"); DSN == "" {
-		DSN = "https://a4efaa11ca764dd8a91d790c0926f810@sentry.io/1511084"
+		DSN = "https://07af393975e249e9bbd7bb6abf033c32@o87286.ingest.sentry.io/5667731"
 	}
 	fmt.Println("DSN", DSN)
 }
